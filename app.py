@@ -46,27 +46,29 @@ def health_check():
     """
     return jsonify({"status": "healthy"})
 
-@app.route('/api/test', methods=['GET'])
-def test_get():
+
+@app.route('/api/airports_direct', methods=['GET'])
+def get_all_airports_direct():
     """
-    Test GET endpoint
+    Direct GET all airports (uses AirportController and DB session)
     ---
     tags:
-      - Test
+      - Airports
     responses:
       200:
-        description: Test OK
+        description: OK
         schema:
-          type: object
-          properties:
-            route:
-              type: string
-              example: /api/test
-            message:
-              type: string
-              example: Test successful
+          type: array
+          items:
+            type: object
     """
-    return jsonify({"route": "/api/test", "message": "Test successful"})
+    # Query the Airport model directly so Swagger shows DB-backed response
+    # Local import to avoid circular imports at module load
+    from my_project.auth.models.airport import Airport
+
+    airports = db.session.query(Airport).all()
+    return jsonify([airport.to_dict() for airport in airports])
+
 
 if __name__ == '__main__':
     app.run(host="0.0.0.0", port=5000)
