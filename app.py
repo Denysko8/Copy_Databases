@@ -46,5 +46,27 @@ def health_check():
     """
     return jsonify({"status": "healthy"})
 
+@app.route('/api/test', methods=['GET'])
+def test_get():
+    """
+    Test GET endpoint
+    ---
+    tags:
+      - Test
+    responses:
+      200:
+        description: Test OK
+        schema:
+          type: object
+          properties:
+            route:
+              type: string
+              example: /api/test
+            message:
+              type: string
+              example: Test successful
+    """
+    return jsonify({"route": "/api/test", "message": "Test successful"})
+
 if __name__ == '__main__':
     app.run(host="0.0.0.0", port=5000)
