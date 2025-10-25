@@ -17,7 +17,7 @@ Swagger(app)
 
 
 load_dotenv()
-app.config['SQLALCHEMY_DATABASE_URI'] = f"mysql+pymysql://{os.environ.get('USER')}:{os.environ.get('PASSWORD')}@{os.environ.get('HOST')}:3306/{os.environ.get('DB_NAME')}"
+app.config['SQLALCHEMY_DATABASE_URI'] = f"mysql+pymysql://{os.environ.get('DB_USER')}:{os.environ.get('DB_PASSWORD')}@{os.environ.get('DB_HOST')}:3306/{os.environ.get('DB_NAME')}"
 
 
 db.init_app(app)
