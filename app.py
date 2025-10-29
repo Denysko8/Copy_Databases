@@ -77,5 +77,28 @@ def get_all_airports_direct():
     return jsonify([airport.to_dict() for airport in airports])
 
 
+@app.route('/api/airports/count', methods=['GET'])
+def get_airports_count():
+    """
+    Get total number of airports
+    ---
+    tags:
+      - Airports
+    responses:
+      200:
+        description: OK
+        schema:
+          type: object
+          properties:
+            count:
+              type: integer
+              example: 5
+    """
+    from my_project.auth.models.airport import Airport
+
+    total = db.session.query(Airport).count()
+    return jsonify({"count": total})
+
+
 if __name__ == '__main__':
     app.run(host="0.0.0.0", port=5000)
