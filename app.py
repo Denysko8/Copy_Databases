@@ -1,5 +1,5 @@
 import os
-
+import urllib.parse
 import pymysql
 pymysql.install_as_MySQLdb()
 
@@ -17,7 +17,14 @@ Swagger(app)
 
 
 load_dotenv()
-app.config['SQLALCHEMY_DATABASE_URI'] = f"mysql+pymysql://{os.environ.get('DB_USER')}:{os.environ.get('DB_PASSWORD')}@{os.environ.get('DB_HOST')}:3306/{os.environ.get('DB_NAME')}"
+
+db_user = os.environ.get('DB_USER')
+db_pass_raw = os.environ.get('DB_PASSWORD')
+db_pass_safe = urllib.parse.quote_plus(db_pass_raw)
+db_host = os.environ.get('DB_HOST')
+db_name = os.environ.get('DB_NAME')
+
+app.config['SQLALCHEMY_DATABASE_URI'] = f"mysql+pymysql://{db_user}:{db_pass_safe}@{db_host}:3306/{db_name}"
 
 
 db.init_app(app)
