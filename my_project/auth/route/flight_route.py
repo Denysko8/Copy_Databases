@@ -53,6 +53,7 @@ def create_flight():
     parameters:
       - in: body
         name: body
+        description: Note - route_id must reference an existing route in the database
         schema:
           type: object
           properties:
@@ -69,15 +70,18 @@ def create_flight():
               example: "2024-12-06T13:00:00"
             route_id:
               type: integer
-              example: 9
+              example: 1
+              description: Must be a valid route_id from the route table
         example:
           flight_number: "BA808"
           departure_time: "2024-12-06T09:00:00"
           arrival_time: "2024-12-06T13:00:00"
-          route_id: 9
+          route_id: 1
     responses:
       201:
         description: Flight created
+      400:
+        description: Invalid route_id or bad request
     """
     return FlightController.create_flight()
 
