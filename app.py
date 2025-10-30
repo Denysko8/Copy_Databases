@@ -73,7 +73,8 @@ def health_check():
     """
     return jsonify({"status": "healthy"})
 
-# --- 3. ДОДАНО ВІДСУТНІ РОУТИ ---
+# --- 3. ВИДАЛЕНО РОУТИ /api/airports_direct ТА /api/airports/count ---
+
 
 # Редірект з / на /apidocs
 @app.route('/')
