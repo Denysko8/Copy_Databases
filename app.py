@@ -82,7 +82,7 @@ def index():
     """
     Redirects the root URL to the Swagger UI documentation.
     """
-    return redirect(url_for('flasgger.ui'))
+    return redirect('/apidocs')
 
 # --- КІНЕЦЬ ДОДАНИХ РОУТІВ ---
 
