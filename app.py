@@ -24,8 +24,8 @@ db_pass_safe = urllib.parse.quote_plus(db_pass_raw)
 db_host = os.environ.get('DB_HOST')
 db_name = os.environ.get('DB_NAME')
 
-app.config['SQLALCHEMY_DATABASE_URI'] = f"mysql+pymysql://{db_user}:{db_pass_raw}@{db_host}:3306/{db_name}"
-# З db_pass_safe теж не працює
+app.config['SQLALCHEMY_DATABASE_URI'] = f"mysql+pymysql://{db_user}:{db_pass_safe}@{db_host}:3306/{db_name}"
+
 
 db.init_app(app)
 
