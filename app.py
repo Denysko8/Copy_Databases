@@ -41,13 +41,8 @@ db.init_app(app)
 
 # --- РЕЄСТРУЄМО ТА ЗАХИЩАЄМО BLUEPRINTS ---
 # (Порядок правильний: 'before_request' *до* 'register_blueprint')
-airport_bp.before_request(auth.login_required)
 app.register_blueprint(airport_bp, url_prefix='/api')
-
-plane_bp.before_request(auth.login_required)
 app.register_blueprint(plane_bp, url_prefix='/api')
-
-flight_bp.before_request(auth.login_required)
 app.register_blueprint(flight_bp, url_prefix='/api')
 
 
