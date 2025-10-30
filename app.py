@@ -40,14 +40,14 @@ app.config['SQLALCHEMY_DATABASE_URI'] = f"mysql+pymysql://{db_user}:{db_pass_saf
 
 db.init_app(app)
 
-app.register_blueprint(airport_bp, url_prefix='/api')
 airport_bp.before_request(auth.login_required)
+app.register_blueprint(airport_bp, url_prefix='/api')
 
-app.register_blueprint(plane_bp, url_prefix='/api')
 plane_bp.before_request(auth.login_required)
+app.register_blueprint(plane_bp, url_prefix='/api')
 
-app.register_blueprint(flight_bp, url_prefix='/api')
 flight_bp.before_request(auth.login_required)
+app.register_blueprint(flight_bp, url_prefix='/api')
 
 
 @app.route('/api/health', methods=['GET'])
