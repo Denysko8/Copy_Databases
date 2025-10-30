@@ -13,7 +13,7 @@ from flask import Flask, jsonify
 from flasgger import Swagger
 
 app = Flask(__name__)
-
+# Swagger(app)  <--- 1. ВИДАЛІТЬ ЦЕЙ РЯДОК. Він викликається занадто рано.
 
 load_dotenv()
 
@@ -27,6 +27,7 @@ app.config['SQLALCHEMY_DATABASE_URI'] = f"mysql+pymysql://{db_user}:{db_pass_saf
 
 db.init_app(app)
 
+# --- 2. ЗАРЕЄСТРУЙТЕ ВСІ BLUEPRINTS ТА ROUTES ---
 app.register_blueprint(airport_bp, url_prefix='/api')
 app.register_blueprint(plane_bp, url_prefix='/api')
 app.register_blueprint(flight_bp, url_prefix='/api')
@@ -98,25 +99,32 @@ def get_airports_count():
     return jsonify({"count": total})
 
 
+# --- 3. ПЕРЕМІСТІТЬ ІНІЦІАЛІЗАЦІЮ SWAGGER СЮДИ ---
+# Цей блок має бути *за межами* if __name__ == '__main__':
+# і *після* того, як всі routes та blueprints зареєстровані.
+
+swagger_config = {
+    "headers": [],
+    "specs": [
+        {
+            "endpoint": "apispec_1",
+            "route": "/apispec_1.json",
+            # Ваш rule_filter вже налаштований правильно, 
+            # щоб бачити всі routes (включаючи ті, що з blueprints)
+            "rule_filter": lambda rule: True, 
+            "model_filter": lambda tag: True,
+        }
+    ],
+    "static_url_path": "/flasgger_static",
+    "swagger_ui": True,
+    "specs_route": "/apidocs" # Це URL вашої Swagger UI, напр. http://.../apidocs
+}
+
+# Ініціалізуємо Swagger ОДИН РАЗ
+Swagger(app, config=swagger_config)
+
+
 if __name__ == '__main__':
-  # Initialize Swagger after all routes and blueprints are registered
-  # Use a permissive rule_filter so Flasgger includes blueprint routes as well
-  swagger_config = {
-      "headers": [],
-      "specs": [
-          {
-              "endpoint": "apispec_1",
-              "route": "/apispec_1.json",
-              # include all routes
-              "rule_filter": lambda rule: True,
-              "model_filter": lambda tag: True,
-          }
-      ],
-      "static_url_path": "/flasgger_static",
-      "swagger_ui": True,
-      "specs_route": "/apidocs"
-  }
-
-  Swagger(app, config=swagger_config)
-
-  app.run(host="0.0.0.0", port=5000)
+    # Тепер цей блок відповідає ТІЛЬКИ за запуск 
+    # локального дев-сервера
+    app.run(host="0.0.0.0", port=5000)
