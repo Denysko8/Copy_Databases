@@ -15,7 +15,6 @@ from flask_httpauth import HTTPBasicAuth
 
 app = Flask(__name__)
 auth = HTTPBasicAuth()
-Swagger(app)
 
 @auth.verify_password
 def verify_password(username, password):
@@ -68,6 +67,31 @@ def health_check():
               example: healthy
     """
     return jsonify({"status": "healthy"})
+
+
+swagger_config = {
+    "headers": [],
+    "specs": [
+        {
+            "endpoint": "apispec_1",
+            "route": "/apispec_1.json",
+            "rule_filter": lambda rule: True,
+            "model_filter": lambda tag: True,
+        }
+    ],
+    "static_url_path": "/flasgger_static",
+    "swagger_ui": True,
+    "specs_route": "/apidocs",
+    
+    # Блок для кнопки "Authorize"
+    "securityDefinitions": {
+        "basicAuth": {
+            "type": "basic"
+        }
+    }
+}
+
+Swagger(app, config=swagger_config)
 
 
 
