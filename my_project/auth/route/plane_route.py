@@ -1,10 +1,12 @@
 from flask import Blueprint
 from my_project.auth.controller.plane_controller import PlaneController
+from auth_config import auth
 
 plane_bp = Blueprint('plane', __name__)
 
 
 @plane_bp.route('/planes', methods=['GET'])
+@auth.login_required
 def get_all_planes():
     """
     Get all planes
@@ -25,6 +27,7 @@ def get_all_planes():
 
 
 @plane_bp.route('/planes_with_maintenances', methods=['GET'])
+@auth.login_required
 def get_planes_with_maintenances():
     """
     Get planes including their maintenance records
@@ -41,6 +44,7 @@ def get_planes_with_maintenances():
 
 
 @plane_bp.route('/planes_with_airline', methods=['GET'])
+@auth.login_required
 def get_planes_with_airline():
     """
     Get planes including their airline information
@@ -57,6 +61,7 @@ def get_planes_with_airline():
 
 
 @plane_bp.route('/planes/<int:plane_id>', methods=['GET'])
+@auth.login_required
 def get_plane_by_id(plane_id):
     """
     Get plane by id
@@ -80,6 +85,7 @@ def get_plane_by_id(plane_id):
 
 
 @plane_bp.route('/planes', methods=['POST'])
+@auth.login_required
 def create_plane():
     """
     Create a new plane
@@ -119,6 +125,7 @@ def create_plane():
 
 
 @plane_bp.route('/planes/<int:plane_id>', methods=['PUT'])
+@auth.login_required
 def update_plane(plane_id):
     """
     Update plane by id
@@ -156,6 +163,7 @@ def update_plane(plane_id):
 
 
 @plane_bp.route('/planes/<int:plane_id>', methods=['DELETE'])
+@auth.login_required
 def delete_plane(plane_id):
     """
     Delete plane by id

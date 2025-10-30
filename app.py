@@ -10,23 +10,11 @@ from my_project.auth.route.airport_route import airport_bp
 from my_project.auth.route.plane_route import plane_bp
 from my_project.auth.route.flight_route import flight_bp
 from flasgger import Swagger
-from flask_httpauth import HTTPBasicAuth
+from auth_config import auth
 
 load_dotenv() # <--- 2. ПЕРЕМІЩЕНО СЮДИ (на самий початок)
 
 app = Flask(__name__)
-auth = HTTPBasicAuth()
-
-@auth.verify_password
-def verify_password(username, password):
-    # Зчитуємо правильні дані з .env
-    env_user = os.environ.get('API_USER')
-    env_pass = os.environ.get('API_PASSWORD')
-    
-    # Перевіряємо, чи збігаються дані
-    if username == env_user and password == env_pass:
-        return username  # Успіх!
-    return None  # Помилка автентифікації
 
 # --- Налаштування БД ---
 db_user = os.environ.get('DB_USER')

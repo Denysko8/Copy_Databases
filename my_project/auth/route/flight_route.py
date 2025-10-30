@@ -1,10 +1,12 @@
 from flask import Blueprint
 from my_project.auth.controller.flight_controller import FlightController
+from auth_config import auth
 
 flight_bp = Blueprint('flight', __name__)
 
 
 @flight_bp.route('/flights', methods=['GET'])
+@auth.login_required
 def get_all_flights():
     """
     Get all flights
@@ -25,6 +27,7 @@ def get_all_flights():
 
 
 @flight_bp.route('/flights/<int:flight_id>', methods=['GET'])
+@auth.login_required
 def get_flight_by_id(flight_id):
     """
     Get flight by id
@@ -48,6 +51,7 @@ def get_flight_by_id(flight_id):
 
 
 @flight_bp.route('/flights', methods=['POST'])
+@auth.login_required
 def create_flight():
     """
     Create a new flight
@@ -93,6 +97,7 @@ def create_flight():
 
 
 @flight_bp.route('/flights/<int:flight_id>', methods=['PUT'])
+@auth.login_required
 def update_flight(flight_id):
     """
     Update flight by id
@@ -132,6 +137,7 @@ def update_flight(flight_id):
 
 
 @flight_bp.route('/flights/<int:flight_id>', methods=['DELETE'])
+@auth.login_required
 def delete_flight(flight_id):
     """
     Delete flight by id

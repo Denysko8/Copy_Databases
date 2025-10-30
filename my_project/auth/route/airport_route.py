@@ -1,9 +1,11 @@
 from flask import Blueprint
 from my_project.auth.controller.airport_controller import AirportController
+from auth_config import auth
 
 airport_bp = Blueprint('airport', __name__)
 
 @airport_bp.route('/airports', methods=['GET'])
+@auth.login_required
 def get_all_airports():
     """
     Get list of all airports
@@ -23,6 +25,7 @@ def get_all_airports():
     return AirportController.get_all_airports()
 
 @airport_bp.route('/airports/<int:airport_id>', methods=['GET'])
+@auth.login_required
 def get_airport_by_id(airport_id):
     """
     Get airport by id
@@ -47,6 +50,7 @@ def get_airport_by_id(airport_id):
     return AirportController.get_airport_by_id(airport_id)
 
 @airport_bp.route('/airports', methods=['POST'])
+@auth.login_required
 def create_airport():
     """
     Create a new airport
@@ -85,6 +89,7 @@ def create_airport():
     return AirportController.create_airport()
 
 @airport_bp.route('/airports/<int:airport_id>', methods=['PUT'])
+@auth.login_required
 def update_airport(airport_id):
     """
     Update an existing airport
@@ -122,6 +127,7 @@ def update_airport(airport_id):
 
 
 @airport_bp.route('/airports/<int:airport_id>', methods=['DELETE'])
+@auth.login_required
 def delete_airport(airport_id):
     """
     Delete an airport
