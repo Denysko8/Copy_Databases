@@ -10,6 +10,8 @@ def get_all_airports():
     ---
     tags:
       - Airports
+    security:
+      - basicAuth: []
     responses:
       200:
         description: A list of airports
@@ -27,6 +29,8 @@ def get_airport_by_id(airport_id):
     ---
     tags:
       - Airports
+    security:
+      - basicAuth: []
     parameters:
       - name: airport_id
         in: path
@@ -49,6 +53,8 @@ def create_airport():
     ---
     tags:
       - Airports
+    security:
+      - basicAuth: []
     parameters:
       - in: body
         name: body
@@ -85,6 +91,8 @@ def update_airport(airport_id):
     ---
     tags:
       - Airports
+    security:
+      - basicAuth: []
     parameters:
       - name: airport_id
         in: path
@@ -120,6 +128,8 @@ def delete_airport(airport_id):
     ---
     tags:
       - Airports
+    security:
+      - basicAuth: []
     parameters:
       - name: airport_id
         in: path

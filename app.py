@@ -11,10 +11,22 @@ from my_project.auth.route.plane_route import plane_bp
 from my_project.auth.route.flight_route import flight_bp
 from flask import Flask, jsonify
 from flasgger import Swagger
+from flask_httpauth import HTTPBasicAuth
 
 app = Flask(__name__)
+auth = HTTPBasicAuth()
 Swagger(app)
 
+@auth.verify_password
+def verify_password(username, password):
+    # Зчитуємо правильні дані з .env
+    env_user = os.environ.get('API_USER')
+    env_pass = os.environ.get('API_PASSWORD')
+    
+    # Перевіряємо, чи збігаються дані
+    if username == env_user and password == env_pass:
+        return username  # Успіх!
+    return None  # Помилка автентифікації
 
 load_dotenv()
 
@@ -29,8 +41,13 @@ app.config['SQLALCHEMY_DATABASE_URI'] = f"mysql+pymysql://{db_user}:{db_pass_saf
 db.init_app(app)
 
 app.register_blueprint(airport_bp, url_prefix='/api')
+airport_bp.before_request(auth.login_required)
+
 app.register_blueprint(plane_bp, url_prefix='/api')
+plane_bp.before_request(auth.login_required)
+
 app.register_blueprint(flight_bp, url_prefix='/api')
+flight_bp.before_request(auth.login_required)
 
 
 @app.route('/api/health', methods=['GET'])

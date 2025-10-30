@@ -11,6 +11,8 @@ def get_all_flights():
     ---
     tags:
       - Flights
+    security:
+      - basicAuth: []
     responses:
       200:
         description: List of flights
@@ -29,6 +31,8 @@ def get_flight_by_id(flight_id):
     ---
     tags:
       - Flights
+    security:
+      - basicAuth: []
     parameters:
       - name: flight_id
         in: path
@@ -50,6 +54,8 @@ def create_flight():
     ---
     tags:
       - Flights
+    security:
+      - basicAuth: []
     parameters:
       - in: body
         name: body
@@ -93,6 +99,8 @@ def update_flight(flight_id):
     ---
     tags:
       - Flights
+    security:
+      - basicAuth: []
     parameters:
       - name: flight_id
         in: path
@@ -130,6 +138,8 @@ def delete_flight(flight_id):
     ---
     tags:
       - Flights
+    security:
+      - basicAuth: []
     parameters:
       - name: flight_id
         in: path

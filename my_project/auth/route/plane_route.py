@@ -11,6 +11,8 @@ def get_all_planes():
     ---
     tags:
       - Planes
+    security:
+      - basicAuth: []
     responses:
       200:
         description: List of planes
@@ -29,6 +31,8 @@ def get_planes_with_maintenances():
     ---
     tags:
       - Planes
+    security:
+      - basicAuth: []
     responses:
       200:
         description: List of planes with maintenance
@@ -43,6 +47,8 @@ def get_planes_with_airline():
     ---
     tags:
       - Planes
+    security:
+      - basicAuth: []
     responses:
       200:
         description: List of planes with airline
@@ -57,6 +63,8 @@ def get_plane_by_id(plane_id):
     ---
     tags:
       - Planes
+    security:
+      - basicAuth: []
     parameters:
       - name: plane_id
         in: path
@@ -78,6 +86,8 @@ def create_plane():
     ---
     tags:
       - Planes
+    security:
+      - basicAuth: []
     parameters:
       - in: body
         name: body
@@ -115,6 +125,8 @@ def update_plane(plane_id):
     ---
     tags:
       - Planes
+    security:
+      - basicAuth: []
     parameters:
       - name: plane_id
         in: path
@@ -150,6 +162,8 @@ def delete_plane(plane_id):
     ---
     tags:
       - Planes
+    security:
+      - basicAuth: []
     parameters:
       - name: plane_id
         in: path
