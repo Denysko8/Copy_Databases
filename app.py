@@ -24,8 +24,7 @@ db_pass_safe = urllib.parse.quote_plus(db_pass_raw)
 db_host = os.environ.get('DB_HOST')
 db_name = os.environ.get('DB_NAME')
 
-app.config['SQLALCHEMY_DATABASE_URI'] = f"mysql+pymysql://{db_user}:{db_pass_raw}@{db_host}:3306/{db_name}"
-# З db_pass_safe теж не працює
+app.config['SQLALCHEMY_DATABASE_URI'] = f"mysql+pymysql://{db_user}:{db_pass_safe}@{db_host}:3306/{db_name}"
 
 db.init_app(app)
 
@@ -34,70 +33,25 @@ app.register_blueprint(plane_bp, url_prefix='/api')
 app.register_blueprint(flight_bp, url_prefix='/api')
 
 
-@app.route('/api/health', methods=['GET'])
-def health_check():
-    """
-    Health check
-    ---
-    tags:
-      - Health
-    responses:
-      200:
-        description: OK
-        schema:
-          type: object
-          properties:
-            status:
-              type: string
-              example: healthy
-    """
-    return jsonify({"status": "healthy"})
+# @app.route('/api/health', methods=['GET'])
+# def health_check():
+#     """
+#     Health check
+#     ---
+#     tags:
+#       - Health
+#     responses:
+#       200:
+#         description: OK
+#         schema:
+#           type: object
+#           properties:
+#             status:
+#               type: string
+#               example: healthy
+#     """
+#     return jsonify({"status": "healthy"})
 
-
-@app.route('/api/airports_direct', methods=['GET'])
-def get_all_airports_direct():
-    """
-    Direct GET all airports (uses AirportController and DB session)
-    ---
-    tags:
-      - Airports
-    responses:
-      200:
-        description: OK
-        schema:
-          type: array
-          items:
-            type: object
-    """
-    # Query the Airport model directly so Swagger shows DB-backed response
-    # Local import to avoid circular imports at module load
-    from my_project.auth.models.airport import Airport
-
-    airports = db.session.query(Airport).all()
-    return jsonify([airport.to_dict() for airport in airports])
-
-
-@app.route('/api/airports/count', methods=['GET'])
-def get_airports_count():
-    """
-    Get total number of airports
-    ---
-    tags:
-      - Airports
-    responses:
-      200:
-        description: OK
-        schema:
-          type: object
-          properties:
-            count:
-              type: integer
-              example: 5
-    """
-    from my_project.auth.models.airport import Airport
-
-    total = db.session.query(Airport).count()
-    return jsonify({"count": total})
 
 
 if __name__ == '__main__':

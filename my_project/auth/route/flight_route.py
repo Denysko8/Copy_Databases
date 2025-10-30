@@ -55,6 +55,26 @@ def create_flight():
         name: body
         schema:
           type: object
+          properties:
+            flight_number:
+              type: string
+              example: "BA808"
+            departure_time:
+              type: string
+              format: date-time
+              example: "2024-12-06T09:00:00"
+            arrival_time:
+              type: string
+              format: date-time
+              example: "2024-12-06T13:00:00"
+            route_id:
+              type: integer
+              example: 9
+        example:
+          flight_number: "BA808"
+          departure_time: "2024-12-06T09:00:00"
+          arrival_time: "2024-12-06T13:00:00"
+          route_id: 9
     responses:
       201:
         description: Flight created
@@ -78,6 +98,18 @@ def update_flight(flight_id):
         name: body
         schema:
           type: object
+          properties:
+            departure_time:
+              type: string
+              format: date-time
+              example: "2024-12-06T09:00:00"
+            arrival_time:
+              type: string
+              format: date-time
+              example: "2024-12-06T13:00:00"
+        example:
+          departure_time: "2024-12-06T09:00:00"
+          arrival_time: "2024-12-06T13:00:00"
     responses:
       200:
         description: Flight updated

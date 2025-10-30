@@ -83,6 +83,24 @@ def create_plane():
         name: body
         schema:
           type: object
+          properties:
+            airline_id:
+              type: integer
+              example: 6
+            model:
+              type: string
+              example: "Boeing 999"
+            registration_number:
+              type: string
+              example: "B6666"
+            total_flight_hours:
+              type: integer
+              example: 5550
+        example:
+          airline_id: 6
+          model: "Boeing 999"
+          registration_number: "B6666"
+          total_flight_hours: 5550
     responses:
       201:
         description: Plane created
@@ -106,6 +124,16 @@ def update_plane(plane_id):
         name: body
         schema:
           type: object
+          properties:
+            model:
+              type: string
+              example: "Boeing 999"
+            total_flight_hours:
+              type: integer
+              example: 9000
+        example:
+          model: "Boeing 999"
+          total_flight_hours: 9000
     responses:
       200:
         description: Plane updated

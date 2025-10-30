@@ -57,12 +57,21 @@ def create_airport():
           properties:
             name:
               type: string
+              example: "Phenian International"
             city:
               type: string
+              example: "Incheon"
             country:
               type: string
+              example: "North Korea"
             iata_code:
               type: string
+              example: "ICN"
+        example:
+          city: "Incheon"
+          country: "North Korea"
+          iata_code: "ICN"
+          name: "Phenian International"
     responses:
       201:
         description: Airport created
@@ -85,6 +94,16 @@ def update_airport(airport_id):
         name: body
         schema:
           type: object
+          properties:
+            city:
+              type: string
+              example: "Kyiv"
+            country:
+              type: string
+              example: "Ukraine"
+        example:
+          city: "Kyiv"
+          country: "Ukraine"
     responses:
       200:
         description: Airport updated
