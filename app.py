@@ -13,7 +13,6 @@ from flask import Flask, jsonify
 from flasgger import Swagger
 
 app = Flask(__name__)
-Swagger(app)
 
 
 load_dotenv()
@@ -101,4 +100,7 @@ def get_airports_count():
 
 
 if __name__ == '__main__':
-    app.run(host="0.0.0.0", port=5000)
+  # Initialize Swagger after all routes and blueprints are registered
+  Swagger(app)
+
+  app.run(host="0.0.0.0", port=5000)
