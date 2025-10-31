@@ -4,7 +4,7 @@ import pymysql
 pymysql.install_as_MySQLdb()
 
 from dotenv import load_dotenv
-from flask import Flask, jsonify, redirect, url_for # <--- 1. ДОДАНО redirect, url_for
+from flask import Flask, jsonify, redirect, url_for
 from db_init import db
 from my_project.auth.route.airport_route import airport_bp
 from my_project.auth.route.plane_route import plane_bp
@@ -12,8 +12,7 @@ from my_project.auth.route.flight_route import flight_bp
 from flasgger import Swagger
 from auth_config import auth
 
-load_dotenv() # <--- 2. ПЕРЕМІЩЕНО СЮДИ (на самий початок)
-
+load_dotenv()
 app = Flask(__name__)
 
 # --- Налаштування БД ---
@@ -28,7 +27,6 @@ app.config['SQLALCHEMY_DATABASE_URI'] = f"mysql+pymysql://{db_user}:{db_pass_saf
 db.init_app(app)
 
 # --- РЕЄСТРУЄМО ТА ЗАХИЩАЄМО BLUEPRINTS ---
-# (Порядок правильний: 'before_request' *до* 'register_blueprint')
 app.register_blueprint(airport_bp, url_prefix='/api')
 app.register_blueprint(plane_bp, url_prefix='/api')
 app.register_blueprint(flight_bp, url_prefix='/api')
@@ -55,8 +53,6 @@ def health_check():
               example: healthy
     """
     return jsonify({"status": "healthy"})
-
-# --- 3. ВИДАЛЕНО РОУТИ /api/airports_direct ТА /api/airports/count ---
 
 
 # Редірект з / на /apidocs
