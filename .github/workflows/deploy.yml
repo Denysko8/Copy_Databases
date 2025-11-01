@@ -1,0 +1,41 @@
+name: Deploy to GCP VM
+
+# 1. Тригер: запускати цей процес при кожному 'push' у гілку 'main'
+on:
+  push:
+    branches:
+      - main  # Або 'master', залежно від назви вашої основної гілки
+
+jobs:
+  deploy:
+    name: Deploy to Web Server (VM1)
+    # 2. Використовуємо тимчасовий сервер (runner) від GitHub
+    runs-on: ubuntu-latest
+
+    steps:
+      # 3. Використовуємо готовий 'Action' для підключення по SSH
+      - name: SSH and Run Deploy Script
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          # --- Початок налаштувань (це секрети) ---
+          
+          # IP-адреса вашої VM1 (Web Server)
+          host: ${{ secrets.GCP_SSH_HOST }}
+
+          # Ім'я користувача на VM1 (під яким ви логінитесь)
+          username: ${{ secrets.GCP_SSH_USERNAME }}
+
+          # Приватний SSH-ключ, який має доступ до VM1
+          key: ${{ secrets.GCP_SSH_PRIVATE_KEY }}
+
+          # Порт (зазвичай 22)
+          port: 22
+          
+          # --- Кінець налаштувань ---
+
+          # 4. Команда, яку потрібно виконати на вашій VM1
+          #    Це просто запуск вашого існуючого скрипта
+          script: |
+            echo "Starting deployment via GitHub Actions..."
+            bash ~/deploy.sh
+            echo "Deployment finished."
