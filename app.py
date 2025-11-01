@@ -35,24 +35,24 @@ app.register_blueprint(flight_bp, url_prefix='/api')
 # --- РЕЄСТРУЄМО ТА ЗАХИЩАЄМО ЛОКАЛЬНІ РОУТИ ---
 
 # /api/health *не* захищаємо
-# @app.route('/api/health', methods=['GET'])
-# def health_check():
-#     """
-#     Health check
-#     ---
-#     tags:
-#       - Health
-#     responses:
-#       200:
-#         description: OK
-#         schema:
-#           type: object
-#           properties:
-#             status:
-#               type: string
-#               example: healthy
-#     """
-#     return jsonify({"status": "healthy"})
+@app.route('/api/health', methods=['GET'])
+def health_check():
+    """
+    Health check
+    ---
+    tags:
+      - Health
+    responses:
+      200:
+        description: OK
+        schema:
+          type: object
+          properties:
+            status:
+              type: string
+              example: healthy
+    """
+    return jsonify({"status": "healthy"})
 
 
 # Редірект з / на /apidocs
